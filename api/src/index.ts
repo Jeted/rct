@@ -1,5 +1,8 @@
 import fetch from 'cross-fetch';
-import type { Endpoints } from './types';
+import type {
+  Availability,
+  Endpoints,
+} from './types';
 
 const buildUrl = (endpoint: Endpoints, params: object) => {
   const querystring = Object.entries(params)
@@ -32,3 +35,16 @@ async function request<T>(
     throw new Error(`Internal error while fetching URL "${url}"`);
   }
 }
+
+export default {
+  get available() {
+    return {
+      getOne: (username: { login: string }) => {
+        return request<Availability>('available', username);
+      },
+      getMany: (usernames: { logins: string[] }) => {
+        return request<Availability[]>('available', { login: usernames.logins }, true);
+      },
+    };
+  },
+};
