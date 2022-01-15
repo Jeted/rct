@@ -45,9 +45,16 @@ async function request<T>(
 export default {
   get available() {
     return {
+      /**
+       * Get availability status of a single username
+       */
       getOne: (username: { login: string }) => {
         return request<Availability>('available', username);
       },
+
+      /**
+       * Get availability status of multiple usernames
+       */
       getMany: (usernames: { logins: string[] }) => {
         return request<Availability[]>('available', { login: usernames.logins }, true);
       },
@@ -56,9 +63,16 @@ export default {
 
   get roles() {
     return {
+      /**
+       * Get mods/vips from a single channel
+       */
       getOne: (channel: UserFilter) => {
         return request<Roles>('roles', channel);
       },
+
+      /**
+       * Get mods/vips from multiple channels
+       */
       getMany: (channels: UsersFilter) => {
         const params = {
           ...(channels.ids ? { id: channels.ids } : { login: channels.logins }),
@@ -71,6 +85,9 @@ export default {
 
   get subs() {
     return {
+      /**
+       * Get subscription info from a user to a single channel
+       */
       getOne: async (from: UserFilter, to: UserFilter) => {
         const params = {
           ...(from.id ? { user_id: from.id } : { user_login: from.login }),
@@ -79,6 +96,10 @@ export default {
 
         return request<Subscription>('subs', params);
       },
+
+      /**
+       * Get subscription info from a user to multiple channels
+       */
       getMany: (from: UserFilter, to: UsersFilter) => {
         const params = {
           ...(from.id ? { user_id: from.id } : { user_login: from.login }),
@@ -92,9 +113,16 @@ export default {
 
   get users() {
     return {
+      /**
+       * Get a single user
+       */
       getOne: (user: UserFilter) => {
         return request<User>('users', user);
       },
+
+      /**
+       * Get multiple users
+       */
       getMany: (users: UsersFilter) => {
         const params = {
           ...(users.ids ? { id: users.ids } : { login: users.logins }),
@@ -107,9 +135,17 @@ export default {
 
   get viewers() {
     return {
+      /**
+       * Get viewers from a single channel
+       */
       getOne: (channel: UserFilter) => {
         return request<ViewersInfo>('viewers', channel);
       },
+
+      /**
+       * Get viewers from multiple channels
+       */
+      getMany: (channels: UsersFilter) => {
         const params = {
           ...(channels.ids ? { id: channels.ids } : { login: channels.logins }),
         };
