@@ -3,6 +3,7 @@ import type {
   Availability,
   Endpoints,
   Roles,
+  Subscription,
   UserFilter,
   UsersFilter,
 } from './types';
@@ -62,6 +63,27 @@ export default {
         };
 
         return request<Roles[]>('roles', params, true);
+      },
+    };
+  },
+
+  get subs() {
+    return {
+      getOne: async (from: UserFilter, to: UserFilter) => {
+        const params = {
+          ...(from.id ? { user_id: from.id } : { user_login: from.login }),
+          ...(to.id ? { channel_id: to.id } : { channel_login: to.login }),
+        };
+
+        return request<Subscription>('subs', params);
+      },
+      getMany: (from: UserFilter, to: UsersFilter) => {
+        const params = {
+          ...(from.id ? { user_id: from.id } : { user_login: from.login }),
+          ...(to.ids ? { channel_id: to.ids } : { channel_login: to.logins }),
+        };
+
+        return request<Subscription[]>('subs', params, true);
       },
     };
   },

@@ -39,3 +39,22 @@ export interface Roles extends Channel {
 interface Role extends Channel {
   date: Date;
 }
+
+export interface Subscription {
+  user: Channel;
+  channel: Channel;
+  isSubbed: boolean;
+  isPrime: boolean;
+  isGift: boolean;
+  isHidden: boolean;
+  totalMonths: number;
+  streakMonths: number;
+  sub: SubInfo | null;
+}
+
+interface SubInfo {
+  tier: number;
+  gifter: Channel | null;
+  start: Date | null;
+  end: Date | null;
+}
