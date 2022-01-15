@@ -7,6 +7,7 @@ import type {
   User,
   UserFilter,
   UsersFilter,
+  ViewersInfo,
 } from './types';
 
 const buildUrl = (endpoint: Endpoints, params: object) => {
@@ -100,6 +101,20 @@ export default {
         };
 
         return request<User[]>('users', params, true);
+      },
+    };
+  },
+
+  get viewers() {
+    return {
+      getOne: (channel: UserFilter) => {
+        return request<ViewersInfo>('viewers', channel);
+      },
+        const params = {
+          ...(channels.ids ? { id: channels.ids } : { login: channels.logins }),
+        };
+
+        return request<ViewersInfo[]>('viewers', params, true);
       },
     };
   },

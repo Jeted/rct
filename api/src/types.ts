@@ -78,3 +78,8 @@ export interface RolesInfo {
   isStaff: boolean;
   isSiteAdmin: boolean;
 }
+
+export interface ViewersInfo extends Channel {
+  count: number;
+  viewers: string[];
+}
