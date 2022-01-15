@@ -2,6 +2,9 @@ import fetch from 'cross-fetch';
 import type {
   Availability,
   Endpoints,
+  Roles,
+  UserFilter,
+  UsersFilter,
 } from './types';
 
 const buildUrl = (endpoint: Endpoints, params: object) => {
@@ -44,6 +47,21 @@ export default {
       },
       getMany: (usernames: { logins: string[] }) => {
         return request<Availability[]>('available', { login: usernames.logins }, true);
+      },
+    };
+  },
+
+  get roles() {
+    return {
+      getOne: (channel: UserFilter) => {
+        return request<Roles>('roles', channel);
+      },
+      getMany: (channels: UsersFilter) => {
+        const params = {
+          ...(channels.ids ? { id: channels.ids } : { login: channels.logins }),
+        };
+
+        return request<Roles[]>('roles', params, true);
       },
     };
   },
