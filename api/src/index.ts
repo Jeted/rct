@@ -4,6 +4,7 @@ import type {
   Endpoints,
   Roles,
   Subscription,
+  User,
   UserFilter,
   UsersFilter,
 } from './types';
@@ -84,6 +85,21 @@ export default {
         };
 
         return request<Subscription[]>('subs', params, true);
+      },
+    };
+  },
+
+  get users() {
+    return {
+      getOne: (user: UserFilter) => {
+        return request<User>('users', user);
+      },
+      getMany: (users: UsersFilter) => {
+        const params = {
+          ...(users.ids ? { id: users.ids } : { login: users.logins }),
+        };
+
+        return request<User[]>('users', params, true);
       },
     };
   },

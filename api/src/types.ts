@@ -58,3 +58,23 @@ interface SubInfo {
   start: Date | null;
   end: Date | null;
 }
+
+export interface User extends Channel {
+  isBanned: boolean;
+  description: string;
+  color: string;
+  avatar: string;
+  roles: RolesInfo;
+  followsCount: number;
+  followersCount: number;
+  views: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface RolesInfo {
+  isAffiliate: boolean;
+  isPartner: boolean;
+  isStaff: boolean;
+  isSiteAdmin: boolean;
+}
